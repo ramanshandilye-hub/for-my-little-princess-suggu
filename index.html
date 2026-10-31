@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>My Little Suggu 💜</title>
+<meta name="theme-color" content="#090816">
+<meta property="og:type" content="website">
+<meta property="og:title" content="For My Little Suggu 💜">
+<meta property="og:description" content="Ek chhota sa surprise, sirf tere liye ✨">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💜</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="stars"></canvas><div class="neb n1"></div><div class="neb n2"></div>
+<div id="planets" aria-hidden="true"><i class="pl p1"></i><i class="pl p2"></i><i class="pl p3"></i><i class="pl p4"></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mascot" viewBox="0 0 100 100"><circle cx="24" cy="28" r="13" fill="#A855F7"/><circle cx="76" cy="28" r="13" fill="#A855F7"/><circle cx="24" cy="28" r="6" fill="#FF72C6"/><circle cx="76" cy="28" r="6" fill="#FF72C6"/><ellipse cx="50" cy="58" rx="38" ry="32" fill="#FFF7FF" stroke="#3b1d5a" stroke-width="3"/><path d="M33 54q5 5 10 0M57 54q5 5 10 0M45 65q5 5 10 0" fill="none" stroke="#3b1d5a" stroke-width="3" stroke-linecap="round"/><ellipse cx="27" cy="64" rx="7" ry="5" fill="#FF9FCB"/><ellipse cx="73" cy="64" rx="7" ry="5" fill="#FF9FCB"/><path d="M50 3l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z" fill="#FFD78A"/></symbol></svg>
+
+<!-- PASSWORD GATE (sawaal/jawab script.js ke CONFIG mein badlo) -->
+<div id="gate" class="screen">
+  <p class="gtitle">My Suggu’s Universe ✨</p>
+  <div class="glass">
+    <svg class="mas"><use href="#mascot"/></svg>
+    <h2>🔒 Pehle password!</h2>
+    <p id="gq"></p>
+    <input id="ga" type="text" autocomplete="off" aria-label="Jawab" placeholder="Jawab likh...">
+    <button id="gbtn" class="neon">Unlock</button>
+    <p id="gmsg" role="status"></p>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <div id="music" hidden>
+    <button id="mbtn" class="neon sm">▶ Music</button>
+    <input id="vol" type="range" min="0" max="1" step="0.05" value="0.6" aria-label="Volume">
+  </div>
+
+  <header id="hero" class="screen">
+    <div class="ring"><i></i></div>
+    <svg class="mas big"><use href="#mascot"/></svg>
+    <h1>My Little 💜<br>(Suggu ✨)</h1>
+    <p class="sub">Some people make the world beautiful… meri duniya mein woh tum ho, Suggu. 💫</p>
+    <button id="enter" class="neon">ENTER MY UNIVERSE 🚀</button>
+  </header>
+
+  <div id="world" hidden>
+    <section id="level" class="block" data-track="hero">
+      <div class="lvl"><b id="lvnum">1</b></div>
+      <div class="badge">LEVEL 19 — SUGGU’S NEW CHAPTER</div>
+      <div class="xp"><i></i></div>
+      <p>Neeche 18 cards hain: 18 wishes, teri age nahi 😄 aur ek secret 19th card bhi hai.</p>
+    </section>
+
+    <section id="gallery" class="block" data-track="hero">
+      <h2>📸 Our little memories</h2>
+      <p>Kisi bhi photo pe tap kar.</p>
+      <div id="grid"></div>
+    </section>
+
+    <section id="cardsec" class="block" data-track="cards">
+      <h2>🎴 18 surprise cards</h2>
+      <p id="count" role="status">0/18 khule</p>
+      <div id="cards"></div>
+      <button id="secret" class="card secret" disabled hidden>🔒 Secret card: pehle saare 18 kholo</button>
+      <div class="row">
+        <button id="openall" class="neon sm">Open all</button>
+        <button id="replayc" class="neon sm">Replay</button>
+      </div>
+    </section>
+
+    <section id="statsec" class="block" data-track="cards" hidden>
+      <h2>📊 Suggu’s stats</h2>
+      <button id="statbtn" class="neon">Click here 👆</button>
+      <div id="statlist" class="glass" hidden></div>
+    </section>
+
+    <section id="lettersec" class="block" data-track="letter" hidden>
+      <h2>💌 Special letter</h2>
+      <button id="openLetter" class="neon">Bhai ka letter kholo ✉️</button>
+    </section>
+
+    <section id="cakesec" class="block" data-track="cake" hidden>
+      <h2>🎂 Cake time!</h2>
+      <p>Do you want to cut the cake?</p>
+      <button id="cakeyes" class="neon">Click here 🎂</button>
+      <div id="cakewrap" hidden>
+        <div id="cake" class="cake" aria-hidden="true">
+          <div class="candles"><div class="candle"><b class="flame"></b></div><div class="candle"><b class="flame"></b></div><div class="candle"><b class="flame"></b></div></div>
+          <div class="tier t2"></div><div class="tier t1"></div>
+        </div>
+        <p>Aankhein band kar, wish maang… phir button daba.</p>
+        <button id="blow" class="neon">Celebrate 🎉</button>
+        <button id="replay" class="neon" hidden>Phir se 🕯️</button>
+        <div id="bday" class="glass" hidden><h2 id="bmsg"></h2><p id="bmsg2"></p><p id="bmsg3"></p></div>
+      </div>
+    </section>
+
+    <section id="giftsec" class="block" data-track="gift" hidden>
+      <h2 id="gtitle"></h2>
+      <p id="ghint"></p>
+      <button id="gift" class="giftbtn" aria-label="Gift kholo"><span class="lid"></span><span class="box"></span></button>
+      <div id="giftshow" class="glass" hidden>
+        <img id="giftimg" alt="Bhai aur Suggu ki gift wali photo">
+        <div id="giftfb" hidden>🚗✨</div>
+        <p id="giftcap"></p>
+        <button id="giftnext" class="neon">Aage ➜</button>
+      </div>
+    </section>
+
+    <section id="endsec" class="screen endscr" data-track="end" hidden>
+      <span class="hg" style="left:8%;--h:50px">🌙</span><span class="hg" style="left:30%;--h:28px">⭐</span><span class="hg" style="right:28%;--h:60px">⭐</span><span class="hg" style="right:8%;--h:40px">🌙</span>
+      <div class="glass endcard">
+        <div class="avatar"><svg class="mas"><use href="#mascot"/></svg></div>
+        <h2 id="etitle" class="script"></h2>
+        <p id="emsg"></p>
+        <p class="theend">— The End —</p>
+        <button id="again" class="neon">🔄 Experience it again</button>
+        <p id="ecredit" class="small"></p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="letter" class="overlay" role="dialog" aria-modal="true" aria-label="Bhai ka letter" hidden>
+  <div class="glass lettercard"><button id="lx" class="lx" aria-label="Band karo">✕</button><p id="lettertext"></p><button id="lclose" class="neon">Band karo 💜</button></div>
+</div>
+
+<div id="lb" class="overlay" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <img id="lbimg" alt="">
+  <p id="lbcap"></p>
+  <div class="row">
+    <button id="prev" class="neon sm" aria-label="Pichli photo">◀</button>
+    <button id="lbclose" class="neon sm" aria-label="Band karo">✕ Close</button>
+    <button id="next" class="neon sm" aria-label="Agli photo">▶</button>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+<canvas id="confetti"></canvas>
+<script src="content.js"></script>
+<script src="extras.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
