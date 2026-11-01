@@ -13,5 +13,13 @@ const END = {
   msg: "I hope this little world made you smile today. Happy Birthday once again, meri Suggu ❤️",
   credit: "Made with ❤️ by Raman"
 };
+
+// Password page pe suspicious gaana, aur sahi jawab ke baad dreamy lo-fi
 MUSIC.gate = "assets/music/00-password.mp3";
 MUSIC.welcome = "assets/music/01-unlock.mp3";
+
+// ---- Photo ka sequence: number = photoN.jpg. Gallery isi order mein dikhegi, "Yaad #" bhi isi order se ----
+const PHOTO_ORDER = [1, 6, 2, 3, 4, 5, 7, 8, 9, 10, 30, 31, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29];
+
+// ---- Stats mein extra ----
+STATS.push(["Strong", "1000%", 100], ["Responsible", "100%", 100]);

@@ -166,3 +166,8 @@ html{overflow-x:hidden}
 .lx{position:sticky;top:0;float:right;z-index:2;width:44px;height:44px;margin:-6px -6px 0 8px;border-radius:50%;border:2px solid var(--gold);background:rgba(9,8,22,.92);color:var(--gold);font:inherit;font-size:1.1rem;cursor:pointer}
 #lettertext .rest{visibility:hidden}
 @media(max-width:700px){h1{animation:none}.ring{animation-duration:70s}}
+
+/* ===== moon + 🧿 ===== */
+.p5{width:min(9vw,70px);right:25vw;top:8%;background:radial-gradient(circle at 32% 28%,#fff,#e4e4f0 45%,#9a9ab8);box-shadow:0 0 22px rgba(255,255,255,.35);animation-duration:8s}
+.p5::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 62% 40%,rgba(120,120,150,.45) 0 12%,transparent 13%),radial-gradient(circle at 38% 68%,rgba(120,120,150,.4) 0 9%,transparent 10%),radial-gradient(circle at 70% 72%,rgba(120,120,150,.35) 0 6%,transparent 7%)}
+.evil{font-size:3.4rem;line-height:1;filter:drop-shadow(0 0 12px rgba(80,160,255,.6))}

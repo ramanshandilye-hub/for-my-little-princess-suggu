@@ -54,6 +54,7 @@ function setTrack(k) {
   fade(0, () => {
     audio.src = src;
     if (held) return;
+    if (bg) { wasPlaying = true; return; }   // site background mein hai to play nahi
     audio.play().then(() => { $("#music").hidden = false; fade(vol); })
       .catch(() => { curTrack = prev; if (prev) { audio.src = prev; audio.play().then(() => fade(vol)).catch(() => {}); } });
   });
@@ -73,8 +74,10 @@ $("#enter").onclick = () => {
 /* ---------- Gallery + lightbox ---------- */
 const items = [], grid = $("#grid"), lb = $("#lb");
 let cur = 0;
-for (let i = 1; i <= CONFIG.photoCount; i++) {
-  const it = { src: `assets/photos/photo${i}.jpg`, cap: CAPTIONS[i] || `Yaad #${i} 💜`, alt: `Suggu ki yaadon ki photo ${i}`, ok: true };
+const ORDER = typeof PHOTO_ORDER !== "undefined" ? PHOTO_ORDER : Array.from({ length: CONFIG.photoCount }, (_, k) => k + 1);
+ORDER.forEach((n, idx) => {
+  const i = idx + 1;   // "Yaad #" isi order se
+  const it = { src: `assets/photos/photo${n}.jpg`, cap: CAPTIONS[n] || `Yaad #${i} 💜`, alt: `Suggu ki yaadon ki photo ${i}`, ok: true };
   const b = document.createElement("button");
   b.className = "ph"; b.setAttribute("aria-label", `Photo ${i} bada karke dekho`);
   const im = new Image();
@@ -83,7 +86,7 @@ for (let i = 1; i <= CONFIG.photoCount; i++) {
   b.append(im);
   b.onclick = () => { showLb(items.indexOf(it)); lb.hidden = false; $("#lbclose").focus(); };
   grid.append(b); items.push(it);
-}
+});
 function showLb(n) { cur = n; $("#lbimg").src = items[n].src; $("#lbimg").alt = items[n].alt; $("#lbcap").textContent = items[n].cap; }
 function step(d) { let n = cur; do { n = (n + d + items.length) % items.length; } while (!items[n].ok && n !== cur); showLb(n); }
 $("#prev").onclick = () => step(-1);
@@ -111,7 +114,7 @@ function openCard(i) {
   $("#count").textContent = `${opened}/18 khule`;
   if (opened === 1) toast("🏅 Achievement: pehla card khola!");
   if (opened === 9) toast("🔥 Aadhe cards khul gaye!");
-  if (opened === CARDS.length) { sec.hidden = false; $("#statsec").hidden = false; sec.disabled = false; sec.textContent = "🎁 Secret card unlock ho gaya! Tap kar"; confetti(80); toast("🎖️ Card Master! Neeche Suggu’s stats unlock ho gaye ⬇️"); }
+  if (opened === CARDS.length) { sec.hidden = false; $("#lettersec").hidden = false; sec.disabled = false; sec.textContent = "🎁 Secret card unlock ho gaya! Tap kar"; confetti(80); toast("🎖️ Card Master! Neeche special letter unlock ho gaya ⬇️"); }
 }
 sec.onclick = () => { if (sec.disabled) return; sec.classList.add("open"); sec.textContent = SECRET; confetti(140); };
 $("#openall").onclick = () => CARDS.forEach((_, i) => openCard(i));
@@ -127,7 +130,7 @@ $("#statbtn").onclick = () => {
   $("#statlist").innerHTML = STATS.map(([n, label, v, cls = ""], i) => `<div class="stat ${cls}"><span>${i + 1}. ${n}</span><b>${label}</b><i style="--w:${v}%"></i></div>`).join("");
   const L = $("#statlist"); L.hidden = false;
   requestAnimationFrame(() => requestAnimationFrame(() => L.classList.add("go")));
-  $("#lettersec").hidden = false; toast("💌 Neeche ek special letter bhi hai");
+  $("#cakesec").hidden = false; toast("🎂 Neeche ek surprise aur baaki hai");
 };
 
 /* ---------- Letter ---------- */
@@ -145,7 +148,7 @@ typeLetter(LETTER.length);
 ["touchstart", "wheel"].forEach(ev => lc.addEventListener(ev, () => follow = false, { passive: true }));   // tu khud scroll kare to ruk jaye
 lt.onclick = () => { clearInterval(ty); follow = false; typeLetter(LETTER.length); lc.scrollTop = 0; };   // tap = poora letter turant
 $("#openLetter").onclick = () => {
-  $("#letter").hidden = false; clearInterval(ty); setTrack("letter"); $("#cakesec").hidden = false;
+  $("#letter").hidden = false; clearInterval(ty); setTrack("letter"); $("#statsec").hidden = false;
   $("#lx").focus({ preventScroll: true }); lc.scrollTop = 0;
   if (reduce) { follow = false; typeLetter(LETTER.length); return; }
   follow = true; let k = 0; const step = Math.max(2, Math.ceil(LETTER.length / 380));   // lamba letter bhi ~12 second mein
@@ -153,7 +156,7 @@ $("#openLetter").onclick = () => {
   ty = setInterval(() => { k += step; typeLetter(k); if (k >= LETTER.length) { clearInterval(ty); follow = false; } }, 30);
 };
 $("#lx").onclick = () => $("#lclose").click();
-$("#lclose").onclick = () => { $("#letter").hidden = true; $("#cakesec").scrollIntoView(); };
+$("#lclose").onclick = () => { $("#letter").hidden = true; $("#statsec").scrollIntoView(); };
 
 /* ---------- Cake ---------- */
 let ct = [];
@@ -230,3 +233,18 @@ $("#etitle").textContent = END.title; $("#emsg").textContent = END.msg; $("#ecre
 // "Experience it again": page reload, password dobara nahi poochhega
 $("#again").onclick = () => { try { sessionStorage.setItem("replay", "1"); } catch (e) {} location.reload(); };
 try { if (sessionStorage.getItem("replay")) { sessionStorage.removeItem("replay"); $("#gate").hidden = true; $("#app").hidden = false; } } catch (e) {}
+
+/* ===== Gaana tabhi chale jab site screen pe ho (app/tab badalne pe ruk jaye, wapas aane pe chale) ===== */
+let bg = false, wasPlaying = false;
+function toBackground() { bg = true; if (!audio.paused) { wasPlaying = true; clearInterval(fadeT); audio.pause(); } }
+function toForeground() {
+  if (!bg) return; bg = false;
+  if (wasPlaying && !held) { audio.volume = 0; audio.play().then(() => fade(vol)).catch(() => {}); }
+  wasPlaying = false;
+}
+document.addEventListener("visibilitychange", () => document.hidden ? toBackground() : toForeground());
+addEventListener("pagehide", toBackground);
+addEventListener("pageshow", () => { if (!document.hidden) toForeground(); });
+addEventListener("blur", toBackground);
+addEventListener("focus", () => { if (!document.hidden) toForeground(); });
+document.addEventListener("pointerdown", () => { if (bg && !document.hidden) toForeground(); }, true);   // safety: tap karte hi wapas
