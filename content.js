@@ -1,7 +1,7 @@
 /* ================= EDIT HERE ================= */
 const CONFIG = {
   question: "Tu bhai ko pyaar se kya bulati hai? 😏",   // password ka sawaal
-  answers: ["beldara", "beldaara"],                      // sahi jawab (chhote akshar mein)
+  answers: ["Bhrata", "Bhaiyu"],                      // sahi jawab (chhote akshar mein)
   hint: "Wahi naam jisse tu mujhe gusse mein chidhaati hai 😜",     // 3 galat jawab ke baad dikhega
   photoCount: 29                                         // photos: assets/photos/photo1.jpg ... photo29.jpg
 };
